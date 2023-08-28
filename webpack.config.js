@@ -28,7 +28,7 @@ function getJsEntries() {
     }
   })
 
-  console.log(entries)
+  // console.log(entries)
 
   return entries
 }

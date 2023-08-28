@@ -5,19 +5,17 @@ const router = express.Router()
 
 const { User } = require('../class/user')
 
+User.create({
+  email: 'test@mail.com',
+  password: 123,
+  role: 1,
+})
 // ================================================================
 
-// router.get Створює нам один ентпоїнт
+router.get('/signup', function (req, res) {
+  res.render('signup', {
+    name: 'signup',
 
-// ↙️ тут вводимо шлях (PATH) до сторінки
-router.get('/singup', function (req, res) {
-  // res.render генерує нам HTML сторінку
-
-  // ↙️ cюди вводимо назву файлу з сontainer
-  res.render('singup', {
-    // вказуємо назву контейнера
-    name: 'singup',
-    // вказуємо назву компонентів
     component: [
       'back-button',
       'field',
@@ -26,11 +24,8 @@ router.get('/singup', function (req, res) {
       'field-select',
     ],
 
-    // вказуємо назву сторінки
-    title: 'Singup Page ',
-    // ... сюди можна далі продовжувати додавати потрібні технічні дані, які будуть використовуватися в layout
+    title: 'Signup Page ',
 
-    // вказуємо дані,
     data: {
       role: [
         { value: User.USER_ROLE.USER, text: 'Користувач' },
@@ -45,8 +40,36 @@ router.get('/singup', function (req, res) {
       ],
     },
   })
-  // ↑↑ сюди вводимо JSON дані
 })
 
-// Підключаємо роутер до бек-енду
+router.post('/signup', function (req, res) {
+  const { email, password, role } = req.body
+
+  if (!email || !password || !role) {
+    return res.status(400).json({
+      message: "Помилка. Обов'язкові поля відсутні",
+    })
+  }
+
+  try {
+    const existingUser = User.getByEmail(email)
+
+    if (existingUser) {
+      return res.status(401).json({
+        message: 'Користувач з таким e-mail вже уснує',
+      })
+    } else {
+      User.create({ email, password, role })
+
+      return res.status(200).json({
+        message: 'Користувач успішно зареєстрований',
+      })
+    }
+  } catch (error) {
+    return res.status(400).json({
+      message: 'Помилка створення користувача',
+    })
+  }
+})
+
 module.exports = router
