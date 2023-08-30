@@ -33,6 +33,7 @@ class Confirm {
     const obj = this.#list.find(
       (item) => item.code === code,
     )
+
     return obj ? obj.data : null
   }
 }
