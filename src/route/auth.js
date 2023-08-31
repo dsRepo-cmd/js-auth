@@ -256,7 +256,8 @@ router.post('/signup-confirm', function (req, res) {
     }
 
     session.user.isConfirm = true
-    User.confirmByEmail(session.user.email, true)
+
+    User.confirmByEmail(email, true)
 
     return res.status(200).json({
       message: 'Ви підтвердили свою пошту',
