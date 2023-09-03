@@ -75,7 +75,7 @@ router.post('/signup', function (req, res) {
 
     if (user) {
       return res.status(401).json({
-        message: 'Користувач з таким e-mail вже уснує',
+        message: 'Користувач з таким e-mail вже існує',
       })
     }
 

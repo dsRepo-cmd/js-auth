@@ -24,3 +24,27 @@
     }
   }
 }
+
+.page--home {
+  grid-template-rows: auto auto 1fr;
+}
+
+.user-title {
+  @include s.click;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  justify-self: end;
+
+  color: s.color(light);
+  text-decoration: none;
+
+  font-size: 14px;
+}
+
+.user-email {
+  color: s.color(dark);
+  font-size: 16px;
+}

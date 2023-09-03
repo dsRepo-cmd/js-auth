@@ -61,9 +61,7 @@ class User {
   static confirmByEmail = (email, confirm) => {
     const user = this.getByEmail(email)
 
-    if (user) {
-      user.isConfirm = confirm
-    }
+    if (user) user.isConfirm = confirm
   }
 }
 
